@@ -1,20 +1,19 @@
-import { createDrawerNavigator } from '@react-navigation/drawer'
-import { HomeScreen } from '../screens/Home'
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { HomeScreen } from '../screens/Home';
+import { DrawerParamList } from './types';
+import React from 'react';
 
-
-const Drawer = createDrawerNavigator({
-    initialRouteName: 'Home',
-    screens: {
-        Home: HomeScreen,
-
-    }
-})
+const Drawer = createDrawerNavigator<DrawerParamList>();
 
 export function DrawerNavigation() {
-    return (
-        <Drawer.Navigator>
-            <Drawer.Screen component={HomeScreen} name='Home' />
-
-        </Drawer.Navigator>
-    )
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerTitleAlign: "center",
+      }}
+    >
+      <Drawer.Screen name="HomeStack" component={HomeScreen} />
+      {/* Você pode adicionar outras telas aqui */}
+    </Drawer.Navigator>
+  );
 }

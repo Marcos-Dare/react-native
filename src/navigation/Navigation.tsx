@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { StackLoginNavigation } from "./StackLoginNavigation";
+import { DrawerNavigation } from "./DrawerNavigation";
 
 export function Navigation(){
-    const login = false;
+    const [isLogged, setIsLogged] = useState(false);
 
     return(
         <NavigationContainer>
-            <StackLoginNavigation/>
+            {isLogged ? (
+                <DrawerNavigation/>
+            ) : (
+                <StackLoginNavigation setIsLogged={setIsLogged}/>
+            )}
         </NavigationContainer>
     )
 }

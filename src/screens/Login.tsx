@@ -6,10 +6,11 @@ import { LoginStackParamList} from "../navigation/types"
 type LoginScreenNavigationProp = StackNavigationProp<LoginStackParamList,"Login">;
 
 type Props = {
-    navigation: LoginScreenNavigationProp
+    navigation: LoginScreenNavigationProp;
+    setIsLogged: (value: boolean) => void;
 };
 
-export function LoginScreen({ navigation }: Props){
+export function LoginScreen({ navigation, setIsLogged }: Props){
     return(
         <View style={{alignItems:"center", backgroundColor:"#d9d9d9", flex:1}}>
             <View style={styles.container1}>
@@ -28,7 +29,7 @@ export function LoginScreen({ navigation }: Props){
                     <TextInput style={styles.inputWithIcon} placeholder="Sua Senha" secureTextEntry={true}/>
                     <Image style={styles.icon} source={require("../assets/olho.png")}/>
                 </View>
-                <TouchableOpacity onPress={()=>navigation.navigate("Home")}>
+                <TouchableOpacity onPress={()=> setIsLogged(true)}>
                     <View style={{alignItems:"center", marginTop:15}}>
                         <View style={styles.button}>
                             <Text style={{fontSize:15, color:"#FFFFFF", fontWeight:"bold"}}>Enviar</Text>
