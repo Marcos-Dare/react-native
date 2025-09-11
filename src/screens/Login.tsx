@@ -1,6 +1,15 @@
-import { View, Text, Image, StyleSheet, TextInput } from "react-native";
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import React from "react";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { LoginStackParamList} from "../navigation/types"
 
-export function LoginScreen({ }){
+type LoginScreenNavigationProp = StackNavigationProp<LoginStackParamList,"Login">;
+
+type Props = {
+    navigation: LoginScreenNavigationProp
+};
+
+export function LoginScreen({ navigation }: Props){
     return(
         <View style={{alignItems:"center", backgroundColor:"#d9d9d9", flex:1}}>
             <View style={styles.container1}>
@@ -19,14 +28,18 @@ export function LoginScreen({ }){
                     <TextInput style={styles.inputWithIcon} placeholder="Sua Senha" secureTextEntry={true}/>
                     <Image style={styles.icon} source={require("../assets/olho.png")}/>
                 </View>
-                <View style={{alignItems:"center", marginTop:15}}>
-                    <View style={styles.button}>
-                        <Text style={{fontSize:15, color:"#FFFFFF", fontWeight:"bold"}}>Enviar</Text>
+                <TouchableOpacity onPress={()=>navigation.navigate("Home")}>
+                    <View style={{alignItems:"center", marginTop:15}}>
+                        <View style={styles.button}>
+                            <Text style={{fontSize:15, color:"#FFFFFF", fontWeight:"bold"}}>Enviar</Text>
+                        </View>
                     </View>
-                </View>
+                </TouchableOpacity>
                 <View style={{flexDirection:"row", justifyContent:"center", marginTop:5}}>
                     <Text style={{color:"#B0B0B0"}}>Não tem conta? </Text>
-                    <Text style={{color:"#439EC9"}} >Registre-se</Text>
+                    <TouchableOpacity onPress={()=>navigation.navigate("Register")}>
+                        <Text style={{color:"#439EC9"}} >Registre-se</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>

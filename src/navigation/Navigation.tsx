@@ -1,13 +1,13 @@
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { DrawerNavigation } from "./DrawerNavigation";
 import { StackLoginNavigation } from "./StackLoginNavigation";
 
+export function Navigation(){
+    const login = false;
 
-export function Navigation() {
-    const login = false
-    return (
+    return(
         <NavigationContainer>
-            {login ? <DrawerNavigation /> : <StackLoginNavigation />}
+            <StackLoginNavigation/>
         </NavigationContainer>
     )
 }

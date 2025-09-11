@@ -1,7 +1,9 @@
-import {Text} from "react-native"
+import {View,Text} from "react-native"
 
 export function HomeScreen(){
     return(
-        <Text>Olá</Text>
+        <View style={{alignItems:"center"}}>
+            <Text>Olá, Bem vindo a Home screen</Text>
+        </View>
     )
 }
