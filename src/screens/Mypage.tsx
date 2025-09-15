@@ -34,7 +34,10 @@ export function MyPage() {
               </View>
             </View>
             <Text style={styles.reportDesc}>{report.description}</Text>
-            <Text style={styles.reportLoc}>{report.location}</Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text style={styles.reportLoc}>{report.location}</Text>
+              <Image source={require("../assets/Trash.png")} style={styles.reportImage} />
+            </View>
           </View>
         </View>
       ))}
@@ -85,10 +88,11 @@ const styles = StyleSheet.create({
     borderColor: "#E0E0E0",
   },
   reportImage: {
-    width: "100%",
-    height: 140,
+    width: 30,
+    height: 30,
     borderRadius: 8,
     marginBottom: 8,
+    marginLeft: 200,
   },
   reportInfo: {
     paddingHorizontal: 4,
