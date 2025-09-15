@@ -10,7 +10,7 @@ type Props = {
     setIsLogged: (value: boolean) => void;
 };
 
-export function LoginScreen({ navigation, setIsLogged }: Props){
+export function Login({ navigation, setIsLogged }: Props){
     return(
         <View style={{alignItems:"center", backgroundColor:"#d9d9d9", flex:1}}>
             <View style={styles.container1}>

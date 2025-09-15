@@ -1,8 +1,10 @@
-export type LoginStackParamList = {
-    Login: undefined;
-    Register: undefined;
-}
-
 export type DrawerParamList = {
-    HomeStack:undefined;
-}
+  'Adicionar Lixo': undefined;
+  'Relatório Gerais': undefined;
+  'Meus Relatórios': undefined;
+};
+
+export type LoginStackParamList = {
+  Login: undefined;
+  Register: undefined;
+};
