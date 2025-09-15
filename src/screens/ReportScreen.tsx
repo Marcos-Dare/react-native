@@ -10,6 +10,7 @@ const mockReports = [
     location: "Localização",
     city: "Cabo Frio",
     neighborhood: "Centro",
+    photo: require("../assets/entulho.jpg"),
   },
   // Adicione mais relatórios aqui
 ];
@@ -119,6 +120,7 @@ export function ReportScreen() {
       <Text style={styles.sectionTitle}>Relatórios Gerais</Text>
       {filteredReports.map((report) => (
         <View key={report.id} style={styles.reportCard}>
+          <Image source={report.photo} style={styles.reportEntulho} />
           <View style={styles.reportInfo}>
             <View style={styles.reportHeader}>
               <Text style={styles.reportId}>Relatório #{report.id}-</Text>
@@ -157,6 +159,13 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     marginRight: 10,
+  },
+  reportEntulho: {
+    width: 300,
+    height: 150,
+    borderRadius: 8,
+    marginBottom: 8,
+    marginLeft: 12,
   },
   filterBox: {
     backgroundColor: "#F7F7F7",

@@ -10,6 +10,7 @@ const mockReports = [
     location: "Localização",
     city: "Cabo Frio",
     neighborhood: "Centro",
+    photo: require("../assets/entulho.jpg"),
   },
   // Adicione mais relatórios aqui
 ];
@@ -25,6 +26,7 @@ export function MyPage() {
       <Text style={styles.sectionTitle}>Meus Relatórios</Text>
       {mockReports.map((report) => (
         <View key={report.id} style={styles.reportCard}>
+          <Image source={report.photo} style={styles.reportEntulho} />
           <View style={styles.reportInfo}>
             <View style={styles.reportHeader}>
               <Text style={styles.reportId}>Relatório #{report.id}-</Text>
@@ -93,6 +95,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 8,
     marginLeft: 200,
+  },
+  reportEntulho: {
+    width: 300,
+    height: 150,
+    borderRadius: 8,
+    marginBottom: 8,
+    marginLeft: 12,
   },
   reportInfo: {
     paddingHorizontal: 4,
