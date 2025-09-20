@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, Alert } from "react-native";
+import { View, Platform, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, ScrollView, Text, Image, StyleSheet, TouchableOpacity, TextInput, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as Location from "expo-location";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export function HomeScreen() {
   const [photoUri, setPhotoUri] = useState<string | null>(null);
@@ -36,7 +37,6 @@ export function HomeScreen() {
       Alert.alert("Campos obrigatórios", "Preencha todos os campos antes de enviar.");
       return;
     }
-    // Simulação de postagem (substitua por chamada de API se necessário)
     const post = {
       foto: photoUri,
       localizacao: location,
@@ -47,52 +47,54 @@ export function HomeScreen() {
     setPhotoUri(null);
     setLocation(null);
     setDescription("");
-    // Aqui você pode enviar o post para sua API
-    // Exemplo: await api.post("/relatorios", post);
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Image style={styles.logo} source={require("../assets/reciclar.png")} />
-        <Text style={styles.title}>GeoLixo</Text>
-      </View>
-      <Text style={styles.reportTitle}>Reportar Entulho</Text>
-      <View style={styles.section}>
-        <Text style={styles.label}>Foto do Entulho</Text>
-        <View style={styles.photoBox}>
-          {photoUri ? (
-            <Image source={{ uri: photoUri }} style={styles.photoPreview} />
-          ) : (
-            <Text style={styles.photoText}>Clique no botão para fotografar</Text>
-          )}
-        </View>
-        <TouchableOpacity style={styles.photoButton} onPress={handlePhotoPress}>
-          <Text style={styles.photoButtonText}>Fotografar Entulho</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.section}>
-        <Text style={styles.label}>GeoLocalização</Text>
-        <TouchableOpacity style={styles.geoButton} onPress={handleLocationPress}>
-          <Text style={styles.geoButtonText}>
-            {location ? location : "Obter localização atual"}
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.section}>
-        <Text style={styles.label}>Descrição</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Descreva o entulho, tipo de lixo e outros detalhes relevantes..."
-          multiline
-          value={description}
-          onChangeText={setDescription}
-        />
-      </View>
-      <TouchableOpacity style={styles.sendButton} onPress={handleSendReport}>
-        <Text style={styles.sendButtonText}>Enviar Relatório</Text>
-      </TouchableOpacity>
-    </View>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <View style={styles.header}>
+            <Image style={styles.logo} source={require("../assets/reciclar.png")} />
+            <Text style={styles.title}>GeoLixo</Text>
+          </View>
+          <Text style={styles.reportTitle}>Reportar Entulho</Text>
+          <View style={styles.section}>
+            <Text style={styles.label}>Foto do Entulho</Text>
+            <View style={styles.photoBox}>
+              {photoUri ? (
+                <Image source={{ uri: photoUri }} style={styles.photoPreview} />
+              ) : (
+                <Text style={styles.photoText}>Clique no botão para fotografar</Text>
+              )}
+            </View>
+            <TouchableOpacity style={styles.photoButton} onPress={handlePhotoPress}>
+              <Text style={styles.photoButtonText}>Fotografar Entulho</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.section}>
+            <Text style={styles.label}>GeoLocalização</Text>
+            <TouchableOpacity style={styles.geoButton} onPress={handleLocationPress}>
+              <Text style={styles.geoButtonText}>
+                {location ? location : "Obter localização atual"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.section}>
+            <Text style={styles.label}>Descrição</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Descreva o entulho, tipo de lixo e outros detalhes relevantes..."
+              multiline
+              value={description}
+              onChangeText={setDescription}
+            />
+          </View>
+          <TouchableOpacity style={styles.sendButton} onPress={handleSendReport}>
+            <Text style={styles.sendButtonText}>Enviar Relatório</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 

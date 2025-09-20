@@ -1,7 +1,9 @@
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, Image,StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import React from "react";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { LoginStackParamList} from "../navigation/types"
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 
 type LoginScreenNavigationProp = StackNavigationProp<LoginStackParamList,"Login">;
 
@@ -12,42 +14,49 @@ type Props = {
 
 export function Login({ navigation, setIsLogged }: Props){
     return(
-        <View style={{alignItems:"center", backgroundColor:"#d9d9d9", flex:1}}>
-            <View style={styles.container1}>
-                <Image style={styles.reciclar} source={require("../assets/reciclar.png")}></Image>
-                <Text style={styles.geolixo}>GeoLixo</Text>
-            </View>
-            <View style={{alignItems:"center"}}>
-                <Text>Entre para reportar e ajudar a limpar nossa cidade</Text>
-            </View>
-            <View style={styles.central}>
-                <Text style={{fontSize:25, fontWeight:"bold"}}>Login</Text>
-                <Text style={{fontWeight:"bold", marginTop:5}}>Email:</Text>
-                <TextInput style={styles.input} placeholder="seu@email" keyboardType="email-address"/>
-                <Text style={{fontWeight:"bold", marginTop:5}}>Senha:</Text>
-                <View style={styles.inputContainer}>
-                    <TextInput style={styles.inputWithIcon} placeholder="Sua Senha" secureTextEntry={true}/>
-                    <Image style={styles.icon} source={require("../assets/olho.png")}/>
-                </View>
-                <TouchableOpacity onPress={()=> setIsLogged(true)}>
-                    <View style={{alignItems:"center", marginTop:15}}>
-                        <View style={styles.button}>
-                            <Text style={{fontSize:15, color:"#FFFFFF", fontWeight:"bold"}}>Enviar</Text>
+        <KeyboardAwareScrollView
+            style={{ flex: 1, backgroundColor: "#d9d9d9" }}
+            contentContainerStyle={{ alignItems: "center", paddingVertical: 20 }}
+            enableOnAndroid={true}
+            keyboardShouldPersistTaps="handled">
+                    <View style={{alignItems:"center", flex:1}}>
+                        <View style={styles.container1}>
+                            <Image style={styles.reciclar} source={require("../assets/reciclar.png")}></Image>
+                            <Text style={styles.geolixo}>GeoLixo</Text>
+                        </View>
+                        <View style={{alignItems:"center"}}>
+                            <Text>Entre para reportar e ajudar a limpar nossa cidade</Text>
+                        </View>
+                        <View style={styles.central}>
+                            <Text style={{fontSize:25, fontWeight:"bold"}}>Login</Text>
+                            <Text style={{fontWeight:"bold", marginTop:5}}>Email:</Text>
+                            <TextInput style={styles.input} placeholder="seu@email" keyboardType="email-address"/>
+                            <Text style={{fontWeight:"bold", marginTop:5}}>Senha:</Text>
+                            <View style={styles.inputContainer}>
+                                <TextInput style={styles.inputWithIcon} placeholder="Sua Senha" secureTextEntry={true}/>
+                                <Image style={styles.icon} source={require("../assets/olho.png")}/>
+                            </View>
+                            <TouchableOpacity onPress={()=> setIsLogged(true)}>
+                                <View style={{alignItems:"center", marginTop:15}}>
+                                    <View style={styles.button}>
+                                        <Text style={{fontSize:15, color:"#FFFFFF", fontWeight:"bold"}}>Enviar</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                            <View style={{flexDirection:"row", justifyContent:"center", marginTop:5}}>
+                                <Text style={{color:"#B0B0B0"}}>Não tem conta? </Text>
+                                <TouchableOpacity onPress={()=>navigation.navigate("Register")}>
+                                    <Text style={{color:"#439EC9"}} >Registre-se</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
-                </TouchableOpacity>
-                <View style={{flexDirection:"row", justifyContent:"center", marginTop:5}}>
-                    <Text style={{color:"#B0B0B0"}}>Não tem conta? </Text>
-                    <TouchableOpacity onPress={()=>navigation.navigate("Register")}>
-                        <Text style={{color:"#439EC9"}} >Registre-se</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </View>
+        </KeyboardAwareScrollView>
     )
 }
 
 const styles = StyleSheet.create({
+
     container1:{
         flexDirection:"row",
         justifyContent:"center",
