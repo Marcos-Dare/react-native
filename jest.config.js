@@ -1,10 +1,6 @@
-/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
-  collectCoverageFrom: [
-    'src/**/*.ts', // Inclui todos os arquivos .ts dentro da pasta src
-    '!src/**/*.test.ts', // Exclui todos os arquivos .test.ts
-    '!src/**/*.spec.ts'  // Exclui todos os arquivos .spec.ts
-  ]
+  preset: 'jest-expo',
+  transformIgnorePatterns: [
+    'node_modules/(?!((jest-)?react-native|@react-native(-community)?|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|unimodules|sentry-expo|native-base|react-native-svg|uuid))',
+  ],
 };

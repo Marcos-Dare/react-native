@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Login } from './src/screens/Login';
 import { RegisterScreen } from './src/screens/Register';
 import { DrawerNavigation } from './src/navigation/DrawerNavigation';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [isLogged, setIsLogged] = useState(false);
