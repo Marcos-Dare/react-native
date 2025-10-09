@@ -1,11 +1,11 @@
 import { View, Text, Image,StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import React from "react";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { LoginStackParamList} from "../navigation/types"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
-type LoginScreenNavigationProp = StackNavigationProp<LoginStackParamList,"Login">;
+type LoginScreenNavigationProp = NativeStackNavigationProp<LoginStackParamList,"Login">;
 
 type Props = {
     navigation: LoginScreenNavigationProp;
