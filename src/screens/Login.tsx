@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 10,
     top: '50%',
-    transform: [{ translateY: -10 }],
+    transform: [{ translateY: -28 }],
     width: 20,
     height: 20,
   },

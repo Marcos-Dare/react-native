@@ -3,6 +3,7 @@ import { Denuncia, StatusDenuncia } from '../../domain/entities/Denuncia';
 
 export class MockDenunciaRepository implements IDenunciaRepository {
 
+
   public denuncias: Denuncia[] = [];
   private static instance: MockDenunciaRepository | null = null;
 

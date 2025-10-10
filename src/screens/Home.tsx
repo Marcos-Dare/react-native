@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Platform, Keyboard, TouchableWithoutFeedback, ScrollView, Text, Image, StyleSheet, TouchableOpacity, TextInput, Alert } from "react-native";
+import { View, Keyboard, TouchableWithoutFeedback, Text, Image, StyleSheet, TouchableOpacity, TextInput, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as Location from "expo-location";
 import { HomeScreenNavigationProp } from '../navigation/types';
@@ -7,6 +7,7 @@ import { makeDenunciaUseCases } from "../core/factories/makeDenunciaUseCases";
 import { Photo } from "../core/domain/value-objects/Photo";
 import { GeoCoordinates } from "../core/domain/value-objects/GeoCoordinates";
 import { useAuth } from "../context/auth";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
 type Props = {
@@ -21,6 +22,7 @@ export function HomeScreen({ navigation }: Props) {
   const [photoUri, setPhotoUri] = useState<string | null>(null);
   const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
   const [description, setDescription] = useState<string>("");
+  const [isLocationLoading, setLocationLoading] = useState(false);
 
   const handlePhotoPress = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
@@ -28,31 +30,42 @@ export function HomeScreen({ navigation }: Props) {
       Alert.alert("Permissão negada", "Você precisa permitir o acesso à câmera.");
       return;
     }
-    const result = await ImagePicker.launchCameraAsync();
+    const result = await ImagePicker.launchCameraAsync({
+        allowsEditing: false,
+        quality: 0.5,
+    });
     if (!result.canceled && result.assets && result.assets.length > 0) {
       setPhotoUri(result.assets[0].uri);
     }
   };
 
   const handleLocationPress = async () => {
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert("Permissão negada", "Você precisa permitir o acesso à localização.");
-      return;
+    if(isLocationLoading) return;
+    setLocationLoading(true);
+    try {
+        const { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+            Alert.alert("Permissão negada", "Você precisa permitir o acesso à localização.");
+            return;
+        }
+        const loc = await Location.getCurrentPositionAsync({});
+        setLocation({
+            latitude: loc.coords.latitude,
+            longitude: loc.coords.longitude,
+        });
+    } catch (error) {
+        Alert.alert("Erro", "Não foi possível obter a localização.");
+    } finally {
+        setLocationLoading(false);
     }
-    const loc = await Location.getCurrentPositionAsync({});
-    setLocation({
-      latitude: loc.coords.latitude,
-      longitude: loc.coords.longitude,
-    });
   };
 
-   if (!user) {
-      Alert.alert("Erro", "Nenhum usuário logado. Não é possível enviar o relatório.");
-      return; // Para a execução da função aqui
-    }
-
   const handleSendReport = async () => {
+    if (!user) {
+      Alert.alert("Erro", "Nenhum usuário logado. Não é possível enviar o relatório.");
+      return;
+    }
+    
     if (!photoUri || !location || !description.trim()) {
       Alert.alert("Campos obrigatórios", "Preencha todos os campos antes de enviar.");
       return;
@@ -60,7 +73,7 @@ export function HomeScreen({ navigation }: Props) {
 
     try {
       const denunciaData = {
-        userId: user?.id,
+        userId: user.id,
         foto: Photo.create(photoUri),
         localizacao: GeoCoordinates.create(location.latitude, location.longitude),
         descricao: description,
@@ -68,24 +81,27 @@ export function HomeScreen({ navigation }: Props) {
 
       await registerDenuncia.execute(denunciaData);
 
-      // 4. Se tudo deu certo, mostra o sucesso e limpa o formulário
       Alert.alert("Relatório enviado!", "Seu relatório foi criado com sucesso.");
       setPhotoUri(null);
       setLocation(null);
       setDescription("");
 
     } catch (error: any) {
-      // 5. Se o caso de uso lançar um erro, mostra o alerta de erro
       console.error("Falha ao registrar denúncia:", error);
       Alert.alert("Erro", "Não foi possível enviar o seu relatório. Tente novamente.");
     }
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView
+        style={{ flex: 1, backgroundColor: '#fff' }}
+        contentContainerStyle={styles.container}
+        enableOnAndroid={true}
+        extraScrollHeight={175}
+        keyboardShouldPersistTaps="handled"
+    >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {/* O seu JSX original da tela */}
+        <View>
           <Text style={styles.reportTitle}>Reportar Entulho</Text>
           
           <View style={styles.section}>
@@ -104,13 +120,12 @@ export function HomeScreen({ navigation }: Props) {
           
           <View style={styles.section}>
             <Text style={styles.label}>GeoLocalização</Text>
-            <TouchableOpacity style={styles.geoButton} onPress={handleLocationPress}>
+            <TouchableOpacity style={styles.geoButton} onPress={handleLocationPress} disabled={isLocationLoading}>
               <Text style={styles.geoButtonText}>
-                {location ? `Lat: ${location.latitude.toFixed(5)}, Lon: ${location.longitude.toFixed(5)}` : "Obter localização atual"}
+                {isLocationLoading ? "Obtendo localização..." : location ? `Lat: ${location.latitude.toFixed(5)}, Lon: ${location.longitude.toFixed(5)}` : "Obter localização atual"}
               </Text>
             </TouchableOpacity>
             
-            {/* O botão para abrir o mapa */}
             {location && (
               <TouchableOpacity
                 style={styles.mapButton}
@@ -138,16 +153,14 @@ export function HomeScreen({ navigation }: Props) {
           <TouchableOpacity style={styles.sendButton} onPress={handleSendReport}>
             <Text style={styles.sendButtonText}>Enviar Denúncia</Text>
           </TouchableOpacity>
-        </ScrollView>
+        </View>
       </TouchableWithoutFeedback>
-    </View>
+    </KeyboardAwareScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
     padding: 24,
   },
   reportTitle: {
