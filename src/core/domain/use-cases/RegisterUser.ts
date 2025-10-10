@@ -1,4 +1,4 @@
-import { randomUUID } from 'crypto';
+import { v4 as uuidv4 } from 'uuid';
 import { User, UserRole } from '../entities/User';
 import { IUserRepository } from '../repositories/IUserRepository';
 import { Name } from '../value-objects/Name';
@@ -26,7 +26,7 @@ export class RegisterUser {
 
 
     const user = User.create({
-      id: randomUUID(),
+      id: uuidv4(),
       name: Name.create(name),
       email: Email.create(email),
       password: Password.create(hashedPassword),

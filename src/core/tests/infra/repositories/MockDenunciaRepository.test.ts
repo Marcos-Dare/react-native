@@ -1,16 +1,32 @@
-import { MockDenunciaRepository } from "../../infra/repositories/MockDenunciaRepository";
-import { DenunciaFactory } from '../../factories/DenunciaFactory';
+import { MockDenunciaRepository } from "../../../infra/repositories/MockDenunciaRepository";
+import { Denuncia } from "../../../domain/entities/Denuncia";
+import { Photo } from "../../../domain/value-objects/Photo";
+import { GeoCoordinates } from "../../../domain/value-objects/GeoCoordinates";
+import { v4 as uuidv4 } from 'uuid';
 
 describe('Infra: MockDenunciaRepository', () => {
   let repository: MockDenunciaRepository;
 
   beforeEach(() => {
-    repository = new MockDenunciaRepository();
+    // Usamos o Singleton, mas limpamos os dados antes de cada teste
+    repository = MockDenunciaRepository.getInstance();
+    (repository as any).denuncias = [];
   });
+
+  // Função auxiliar para criar uma denúncia de teste
+  const createTestDenuncia = () => {
+    return Denuncia.create({
+      id: uuidv4(),
+      userId: uuidv4(),
+      foto: Photo.create('file:///test/foto.jpg'),
+      localizacao: GeoCoordinates.create(-23.5613, -46.6565),
+      descricao: 'Teste de denúncia',
+    });
+  };
 
   describe('save()', () => {
     it('deve salvar uma denúncia no array em memória', async () => {
-      const denuncia = DenunciaFactory.create({});
+      const denuncia = createTestDenuncia();
       await repository.save(denuncia);
 
       expect(repository.denuncias).toHaveLength(1);
@@ -20,7 +36,7 @@ describe('Infra: MockDenunciaRepository', () => {
 
   describe('findById()', () => {
     it('deve encontrar uma denúncia pelo ID', async () => {
-      const denuncia = DenunciaFactory.create({});
+      const denuncia = createTestDenuncia();
       await repository.save(denuncia);
 
       const found = await repository.findById(denuncia.id);
@@ -37,7 +53,7 @@ describe('Infra: MockDenunciaRepository', () => {
 
   describe('update()', () => {
     it('deve atualizar os dados de uma denúncia existente', async () => {
-      const denunciaOriginal = DenunciaFactory.create({});
+      const denunciaOriginal = createTestDenuncia();
       await repository.save(denunciaOriginal);
 
       const denunciaAtualizada = denunciaOriginal.updateDescricao('Nova descrição');
@@ -50,15 +66,14 @@ describe('Infra: MockDenunciaRepository', () => {
 
   describe('delete()', () => {
     it('deve remover uma denúncia do array', async () => {
-      const denuncia = DenunciaFactory.create({});
+      const denuncia = createTestDenuncia();
       await repository.save(denuncia);
 
-      expect(repository.denuncias).toHaveLength(1); 
+      expect(repository.denuncias).toHaveLength(1);
 
       await repository.delete(denuncia.id);
 
-      expect(repository.denuncias).toHaveLength(0); 
+      expect(repository.denuncias).toHaveLength(0);
     });
   });
-
 });

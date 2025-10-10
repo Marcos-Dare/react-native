@@ -1,9 +1,12 @@
 import React from 'react';
 import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { Alert } from 'react-native';
+import { useAuth } from '../context/auth'; // 1. IMPORTE O HOOK
 
 export function CustomDrawerContent(props: any) {
-  const { setIsLogged } = props;
+  // O componente NÃO precisa mais de 'setIsLogged'
+  // 2. PEGUE A FUNÇÃO DE LOGOUT DO CONTEXTO
+  const { handleLogout } = useAuth();
 
   return (
     <DrawerContentScrollView {...props}>
@@ -21,13 +24,8 @@ export function CustomDrawerContent(props: any) {
                 {
                   text: 'Sair',
                   style: 'destructive',
-                  onPress: () => {
-                    setIsLogged(false);
-                    props.navigation.reset({
-                      index: 0,
-                      routes: [{ name: 'Login' }],
-                    });
-                  },
+                  // 3. CHAME A FUNÇÃO DO CONTEXTO
+                  onPress: handleLogout,
                 },
               ],
               { cancelable: true }

@@ -4,6 +4,14 @@ import { Denuncia, StatusDenuncia } from '../../domain/entities/Denuncia';
 export class MockDenunciaRepository implements IDenunciaRepository {
 
   public denuncias: Denuncia[] = [];
+  private static instance: MockDenunciaRepository | null = null;
+
+  public static getInstance(): MockDenunciaRepository {
+    if (!MockDenunciaRepository.instance) {
+      MockDenunciaRepository.instance = new MockDenunciaRepository();
+    }
+    return MockDenunciaRepository.instance;
+  }
 
   async save(denuncia: Denuncia): Promise<void> {
     this.denuncias.push(denuncia);

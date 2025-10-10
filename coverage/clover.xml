@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1760061545808" clover="3.2.0">
+  <project timestamp="1760061545808" name="All files">
+    <metrics statements="153" coveredstatements="141" conditionals="62" coveredconditionals="56" methods="73" coveredmethods="67" elements="288" coveredelements="264" complexity="0" loc="153" ncloc="153" packages="5" files="21" classes="21"/>
+    <package name="domain.entities">
+      <metrics statements="21" coveredstatements="20" conditionals="2" coveredconditionals="2" methods="11" coveredmethods="10"/>
+      <file name="Denuncia.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/entities/Denuncia.ts">
+        <metrics statements="13" coveredstatements="12" conditionals="2" coveredconditionals="2" methods="7" coveredmethods="6"/>
+        <line num="24" count="22" type="stmt"/>
+        <line num="25" count="22" type="stmt"/>
+        <line num="26" count="22" type="stmt"/>
+        <line num="27" count="22" type="stmt"/>
+        <line num="28" count="22" type="stmt"/>
+        <line num="29" count="22" type="stmt"/>
+        <line num="30" count="22" type="stmt"/>
+        <line num="42" count="14" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="65" count="3" type="stmt"/>
+        <line num="69" count="2" type="stmt"/>
+      </file>
+      <file name="User.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/entities/User.ts">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+        <line num="25" count="22" type="stmt"/>
+        <line num="26" count="22" type="stmt"/>
+        <line num="27" count="22" type="stmt"/>
+        <line num="28" count="22" type="stmt"/>
+        <line num="29" count="22" type="stmt"/>
+        <line num="40" count="18" type="stmt"/>
+        <line num="46" count="3" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="domain.use-cases">
+      <metrics statements="66" coveredstatements="60" conditionals="28" coveredconditionals="24" methods="22" coveredmethods="22"/>
+      <file name="DeleteDenuncia.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/use-cases/DeleteDenuncia.ts">
+        <metrics statements="5" coveredstatements="4" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="11" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+      </file>
+      <file name="DeleteUser.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/use-cases/DeleteUser.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="7" count="2" type="stmt"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="11" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+      </file>
+      <file name="FindDenuncia.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/use-cases/FindDenuncia.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="8" count="1" type="stmt"/>
+      </file>
+      <file name="FindUser.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/use-cases/FindUser.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="8" count="2" type="stmt"/>
+      </file>
+      <file name="LoginUser.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/use-cases/LoginUser.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="16" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="25" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="36" count="2" type="stmt"/>
+      </file>
+      <file name="LogoutUser.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/use-cases/LogoutUser.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="7" count="2" type="stmt"/>
+      </file>
+      <file name="RegisterDenuncia.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/use-cases/RegisterDenuncia.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="16" count="6" type="stmt"/>
+        <line num="18" count="6" type="stmt"/>
+        <line num="26" count="6" type="stmt"/>
+        <line num="28" count="6" type="stmt"/>
+      </file>
+      <file name="RegisterUser.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/use-cases/RegisterUser.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <line num="17" count="9" type="stmt"/>
+        <line num="19" count="9" type="stmt"/>
+        <line num="21" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="25" count="8" type="stmt"/>
+        <line num="28" count="8" type="stmt"/>
+        <line num="37" count="8" type="stmt"/>
+        <line num="39" count="8" type="stmt"/>
+        <line num="44" count="8" type="stmt"/>
+      </file>
+      <file name="UpdateDenuncia.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/use-cases/UpdateDenuncia.ts">
+        <metrics statements="20" coveredstatements="15" conditionals="12" coveredconditionals="9" methods="2" coveredmethods="2"/>
+        <line num="15" count="4" type="stmt"/>
+        <line num="17" count="4" type="stmt"/>
+        <line num="19" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="23" count="3" type="stmt"/>
+        <line num="26" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="29" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="33" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="34" count="1" type="cond" truecount="1" falsecount="3"/>
+        <line num="36" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="45" count="0" type="stmt"/>
+        <line num="49" count="3" type="stmt"/>
+        <line num="51" count="3" type="stmt"/>
+      </file>
+      <file name="UpdateUser.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/use-cases/UpdateUser.ts">
+        <metrics statements="11" coveredstatements="11" conditionals="6" coveredconditionals="6" methods="2" coveredmethods="2"/>
+        <line num="16" count="5" type="stmt"/>
+        <line num="18" count="5" type="stmt"/>
+        <line num="20" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="24" count="4" type="stmt"/>
+        <line num="26" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="30" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="34" count="4" type="stmt"/>
+        <line num="36" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="domain.value-objects">
+      <metrics statements="23" coveredstatements="23" conditionals="18" coveredconditionals="18" methods="15" coveredmethods="15"/>
+      <file name="Email.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/value-objects/Email.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <line num="5" count="21" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="20" type="stmt"/>
+        <line num="13" count="21" type="stmt"/>
+        <line num="14" count="21" type="stmt"/>
+      </file>
+      <file name="GeoCoordinates.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/value-objects/GeoCoordinates.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
+        <line num="5" count="16" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="8" count="14" type="stmt"/>
+        <line num="12" count="16" type="cond" truecount="4" falsecount="0"/>
+      </file>
+      <file name="Name.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/value-objects/Name.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <line num="5" count="23" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="22" type="stmt"/>
+        <line num="12" count="23" type="stmt"/>
+      </file>
+      <file name="Password.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/value-objects/Password.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
+        <line num="5" count="20" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="19" type="stmt"/>
+        <line num="12" count="20" type="stmt"/>
+      </file>
+      <file name="Photo.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/domain/value-objects/Photo.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
+        <line num="5" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="8" count="12" type="stmt"/>
+        <line num="13" count="13" type="cond" truecount="2" falsecount="0"/>
+        <line num="14" count="13" type="stmt"/>
+        <line num="16" count="13" type="cond" truecount="2" falsecount="0"/>
+      </file>
+    </package>
+    <package name="factories">
+      <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="makeDenunciaUseCases.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/factories/makeDenunciaUseCases.ts">
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+      </file>
+      <file name="makeUserUseCases.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/factories/makeUserUseCases.ts">
+        <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="infra.repositories">
+      <metrics statements="29" coveredstatements="24" conditionals="14" coveredconditionals="12" methods="23" coveredmethods="18"/>
+      <file name="MockDenunciaRepository.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/infra/repositories/MockDenunciaRepository.ts">
+        <metrics statements="17" coveredstatements="12" conditionals="6" coveredconditionals="5" methods="13" coveredmethods="8"/>
+        <line num="6" count="6" type="stmt"/>
+        <line num="7" count="6" type="stmt"/>
+        <line num="10" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="13" count="11" type="stmt"/>
+        <line num="17" count="10" type="stmt"/>
+        <line num="21" count="12" type="stmt"/>
+        <line num="22" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="33" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="38" count="4" type="stmt"/>
+        <line num="39" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="40" count="4" type="stmt"/>
+        <line num="46" count="2" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+      </file>
+      <file name="MockUserRepository.ts" path="/home/marcos/Área de Trabalho/Projetos/react-native/src/core/infra/repositories/MockUserRepository.ts">
+        <metrics statements="12" coveredstatements="12" conditionals="8" coveredconditionals="7" methods="10" coveredmethods="10"/>
+        <line num="5" count="14" type="stmt"/>
+        <line num="7" count="7" type="stmt"/>
+        <line num="10" count="10" type="cond" truecount="2" falsecount="0"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="13" count="10" type="stmt"/>
+        <line num="16" count="16" type="stmt"/>
+        <line num="21" count="15" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="29" count="5" type="stmt"/>
+        <line num="30" count="5" type="cond" truecount="1" falsecount="1"/>
+        <line num="31" count="5" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

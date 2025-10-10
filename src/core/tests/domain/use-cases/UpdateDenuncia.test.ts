@@ -4,36 +4,45 @@ import { RegisterDenuncia } from "../../../domain/use-cases/RegisterDenuncia";
 import { Photo } from "../../../domain/value-objects/Photo";
 import { GeoCoordinates } from "../../../domain/value-objects/GeoCoordinates";
 import { Denuncia } from "../../../domain/entities/Denuncia";
-import { DenunciaFactory } from "../../../factories/DenunciaFactory";
+import { v4 as uuidv4 } from 'uuid'; // Importe o uuid
 
-describe("testando use-case: UpdateDenuncia", ()=>{
-    it("deve atualizar uma denuncia com sucesso", async ()=>{
-        const denunciaRepository = new MockDenunciaRepository()
-        const registerDenuncia = new RegisterDenuncia(denunciaRepository)
-        const updateDenuncia = new UpdateDenuncia(denunciaRepository)
+describe("Caso de Uso: UpdateDenuncia", () => {
+    let denunciaRepository: MockDenunciaRepository;
+    let registerDenuncia: RegisterDenuncia;
+    let updateDenuncia: UpdateDenuncia;
 
-        const denuncia = await registerDenuncia.execute({
+    // A função 'beforeEach' é executada antes de cada teste 'it'
+    beforeEach(() => {
+        denunciaRepository = MockDenunciaRepository.getInstance();
+        (denunciaRepository as any).denuncias = []; // Limpa o repositório
+        registerDenuncia = new RegisterDenuncia(denunciaRepository);
+        updateDenuncia = new UpdateDenuncia(denunciaRepository);
+    });
+
+    it("deve atualizar uma denuncia com sucesso", async () => {
+        // Arrange
+        const denunciaOriginal = await registerDenuncia.execute({
             userId: "1",
             foto: Photo.create("file:///home/marcos/Imagens/tela3.png"),
             localizacao: GeoCoordinates.create(-23.1234, -43.1234),
             descricao: "essa é 1"
-        })
+        });
 
-        expect((await denuncia).descricao).toBe("essa é 1")
+        expect(denunciaOriginal.descricao).toBe("essa é 1"); // Não precisa de 'await' aqui
 
-        const denuncia_atualizada = await updateDenuncia.execute({
-            id: denuncia.id,
+        // Act
+        const denunciaAtualizada = await updateDenuncia.execute({
+            id: denunciaOriginal.id,
             descricao: "essa é 2",
             localizacao: GeoCoordinates.create(-23.1234, -43.1234),
-        })
+        });
 
-        expect(denuncia_atualizada).toBeInstanceOf(Denuncia)
-        expect((await denuncia_atualizada).descricao).toBe("essa é 2")
-    })
+        // Assert
+        expect(denunciaAtualizada).toBeInstanceOf(Denuncia);
+        expect(denunciaAtualizada.descricao).toBe("essa é 2"); // Não precisa de 'await' aqui
+    });
 
     it("deve lançar um erro ao tentar atualizar uma denúncia que não existe", async () => {
-        const denunciaRepository = new MockDenunciaRepository();
-        const updateDenuncia = new UpdateDenuncia(denunciaRepository);
         const idInexistente = "11";
 
         await expect(
@@ -45,42 +54,43 @@ describe("testando use-case: UpdateDenuncia", ()=>{
     });
 
     it('deve atualizar o status para "em_analise"', async () => {
-   
-        const mockRepository = new MockDenunciaRepository();
-        const updateDenunciaUseCase = new UpdateDenuncia(mockRepository);
-        const denunciaOriginal = DenunciaFactory.create({}); 
-        await mockRepository.save(denunciaOriginal);
-
- 
-        await updateDenunciaUseCase.execute({
-        id: denunciaOriginal.id,
-        status: 'em_analise',
+        // Arrange
+        const denunciaOriginal = await registerDenuncia.execute({
+            userId: "1",
+            foto: Photo.create("file:///test.png"),
+            localizacao: GeoCoordinates.create(0, 0),
         });
 
- 
-        const denunciaDoRepositorio = await mockRepository.findById(denunciaOriginal.id);
+        // Act
+        await updateDenuncia.execute({
+            id: denunciaOriginal.id,
+            status: 'em_analise',
+        });
+
+        // Assert
+        const denunciaDoRepositorio = await denunciaRepository.findById(denunciaOriginal.id);
         expect(denunciaDoRepositorio?.status).toBe('em_analise');
     });
 
     it('deve atualizar apenas a localização, sem alterar outros dados', async () => {
-
-        const mockRepository = new MockDenunciaRepository();
-        const updateDenunciaUseCase = new UpdateDenuncia(mockRepository);
-        const denunciaOriginal = DenunciaFactory.create({});
-        await mockRepository.save(denunciaOriginal);
+        // Arrange
+        const denunciaOriginal = await registerDenuncia.execute({
+            userId: "1",
+            foto: Photo.create("file:///test.png"),
+            localizacao: GeoCoordinates.create(0, 0),
+        });
 
         const novaLocalizacao = GeoCoordinates.create(1, 2);
 
-
-        await updateDenunciaUseCase.execute({
-        id: denunciaOriginal.id,
-        localizacao: novaLocalizacao,
+        // Act
+        await updateDenuncia.execute({
+            id: denunciaOriginal.id,
+            localizacao: novaLocalizacao,
         });
 
-
-        const denunciaDoRepositorio = await mockRepository.findById(denunciaOriginal.id);
+        // Assert
+        const denunciaDoRepositorio = await denunciaRepository.findById(denunciaOriginal.id);
         expect(denunciaDoRepositorio?.localizacao).toEqual(novaLocalizacao);
-
-        expect(denunciaDoRepositorio?.status).toBe('pendente'); 
+        expect(denunciaDoRepositorio?.status).toBe('pendente'); // Verifica se o status foi mantido
     });
-})
+});
