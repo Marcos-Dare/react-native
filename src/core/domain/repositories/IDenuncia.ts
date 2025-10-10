@@ -8,4 +8,5 @@ export interface IDenunciaRepository {
   findByStatus(status: StatusDenuncia): Promise<Denuncia[]>;
   update(denuncia: Denuncia): Promise<void>;
   delete(id: string): Promise<void>;
+  findAll(): Promise<Denuncia[]>; // <-- ADICIONE ESTA LINHA
 }

@@ -92,13 +92,63 @@ export function Login({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-    container1: { flexDirection: "row", justifyContent: "center", alignItems: "center", marginTop: 30 },
-    reciclar: { width: 50, height: 50, marginRight: 10 },
-    geolixo: { fontSize: 35, fontWeight: "bold" },
-    central: { width: 300, backgroundColor: "#FFFFFF", borderRadius: 12, marginTop: 45, padding: 15 },
-    inputContainer: { position: "relative", justifyContent: "center" },
-    inputWithIcon: { borderWidth: 1, borderRadius: 10, backgroundColor: "#f9f9f9", marginTop: 5, paddingVertical: 8, paddingHorizontal: 12, paddingRight: 40 },
-    input: { borderWidth: 1, borderRadius: 10, backgroundColor: "#f9f9f9", marginTop: 5, paddingVertical: 8, paddingHorizontal: 12 },
-    icon: { position: "absolute", right: 10, top: '50%', transform: [{ translateY: -10 }], width: 20, height: 20 },
-    button: { justifyContent: "center", alignItems: "center", backgroundColor: "#439EC9", width: 200, height: 45, borderRadius: 12 }
+  container1: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 30,
+  },
+  reciclar: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+  },
+  geolixo: {
+    fontSize: 35,
+    fontWeight: "bold",
+  },
+  central: {
+    width: 300,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 12,
+    marginTop: 45,
+    padding: 15,
+  },
+  inputContainer: {
+    position: "relative",
+    justifyContent: "center",
+  },
+  inputWithIcon: {
+    borderWidth: 1,
+    borderRadius: 10,
+    backgroundColor: "#f9f9f9",
+    marginTop: 5,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    paddingRight: 40,
+  },
+  input: {
+    borderWidth: 1,
+    borderRadius: 10,
+    backgroundColor: "#f9f9f9",
+    marginTop: 5,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+  },
+  icon: {
+    position: "absolute",
+    right: 10,
+    top: '50%',
+    transform: [{ translateY: -10 }],
+    width: 20,
+    height: 20,
+  },
+  button: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#439EC9",
+    width: 200,
+    height: 45,
+    borderRadius: 12,
+  },
 });

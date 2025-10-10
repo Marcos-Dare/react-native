@@ -42,15 +42,15 @@ export function RegisterScreen({ navigation }:Props){
     }
 
     return(
-        // 2. Substitua a View principal pelo KeyboardAwareScrollView
+
         <KeyboardAwareScrollView
             style={{ flex: 1, backgroundColor: "#d9d9d9" }}
-            contentContainerStyle={{ flexGrow: 1, alignItems: "center" }} // Use flexGrow para centralizar
+            contentContainerStyle={{ flexGrow: 1, alignItems: "center" }} 
             enableOnAndroid={true}
             extraScrollHeight={20}
             keyboardShouldPersistTaps="handled"
         >
-            {/* 3. Envolva o conteúdo com o TouchableWithoutFeedback para fechar o teclado */}
+            {}
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={{alignItems:"center", width: '100%'}}>
                     <View style={styles.container1}>

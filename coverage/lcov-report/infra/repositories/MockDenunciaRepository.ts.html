@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68.18% </span>
+                <span class="strong">86.36% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/22</span>
+                <span class='fraction'>19/22</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.53% </span>
+                <span class="strong">84.61% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>8/13</span>
+                <span class='fraction'>11/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70.58% </span>
+                <span class="strong">88.23% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>12/17</span>
+                <span class='fraction'>15/17</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -119,18 +119,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -140,8 +140,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -163,7 +163,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { IDenunciaRepository } from '../../domain/repositories/IDenuncia';
 import { Denuncia, StatusDenuncia } from '../../domain/entities/Denuncia';
@@ -189,10 +189,10 @@ export class MockDenunciaRepository implements IDenunciaRepository {
     return found || null;
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  as</span>ync findByUserId(userId: string): Promise&lt;Denuncia[]&gt; {
+  async findByUserId(userId: string): Promise&lt;Denuncia[]&gt; {
 &nbsp;
-    const found = <span class="cstat-no" title="statement not covered" >this.denuncias.filter(<span class="fstat-no" title="function not covered" >d </span>=&gt; <span class="cstat-no" title="statement not covered" >d.userId === userId)</span>;</span>
-<span class="cstat-no" title="statement not covered" >    return found;</span>
+    const found = this.denuncias.filter(d =&gt; d.userId === userId);
+    return found;
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  as</span>ync findByStatus(status: StatusDenuncia): Promise&lt;Denuncia[]&gt; {
@@ -213,8 +213,8 @@ export class MockDenunciaRepository implements IDenunciaRepository {
     this.denuncias = this.denuncias.filter(d =&gt; d.id !== id);
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  as</span>ync findAll(): Promise&lt;Denuncia[]&gt; {
-<span class="cstat-no" title="statement not covered" >    return this.denuncias;</span>
+  async findAll(): Promise&lt;Denuncia[]&gt; {
+    return this.denuncias;
   }
 }</pre></td></tr></table></pre>
 
@@ -223,7 +223,7 @@ export class MockDenunciaRepository implements IDenunciaRepository {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-10-10T01:59:05.693Z
+                at 2025-10-10T15:47:39.168Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

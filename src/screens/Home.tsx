@@ -2,13 +2,22 @@ import React, { useState } from "react";
 import { View, Platform, Keyboard, TouchableWithoutFeedback, ScrollView, Text, Image, StyleSheet, TouchableOpacity, TextInput, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as Location from "expo-location";
-import { HomeScreenNavigationProp } from '../navigation/types'; // Importando o tipo correto
+import { HomeScreenNavigationProp } from '../navigation/types';
+import { makeDenunciaUseCases } from "../core/factories/makeDenunciaUseCases";
+import { Photo } from "../core/domain/value-objects/Photo";
+import { GeoCoordinates } from "../core/domain/value-objects/GeoCoordinates";
+import { useAuth } from "../context/auth";
+
 
 type Props = {
   navigation: HomeScreenNavigationProp;
 };
 
 export function HomeScreen({ navigation }: Props) {
+
+  const { registerDenuncia } = makeDenunciaUseCases();
+  const { user } = useAuth();
+
   const [photoUri, setPhotoUri] = useState<string | null>(null);
   const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
   const [description, setDescription] = useState<string>("");
@@ -38,16 +47,38 @@ export function HomeScreen({ navigation }: Props) {
     });
   };
 
-  const handleSendReport = () => {
+   if (!user) {
+      Alert.alert("Erro", "Nenhum usuário logado. Não é possível enviar o relatório.");
+      return; // Para a execução da função aqui
+    }
+
+  const handleSendReport = async () => {
     if (!photoUri || !location || !description.trim()) {
       Alert.alert("Campos obrigatórios", "Preencha todos os campos antes de enviar.");
       return;
     }
-    // Lógica de envio...
-    Alert.alert("Relatório enviado!", "Seu relatório foi criado com sucesso.");
-    setPhotoUri(null);
-    setLocation(null);
-    setDescription("");
+
+    try {
+      const denunciaData = {
+        userId: user?.id,
+        foto: Photo.create(photoUri),
+        localizacao: GeoCoordinates.create(location.latitude, location.longitude),
+        descricao: description,
+      };
+
+      await registerDenuncia.execute(denunciaData);
+
+      // 4. Se tudo deu certo, mostra o sucesso e limpa o formulário
+      Alert.alert("Relatório enviado!", "Seu relatório foi criado com sucesso.");
+      setPhotoUri(null);
+      setLocation(null);
+      setDescription("");
+
+    } catch (error: any) {
+      // 5. Se o caso de uso lançar um erro, mostra o alerta de erro
+      console.error("Falha ao registrar denúncia:", error);
+      Alert.alert("Erro", "Não foi possível enviar o seu relatório. Tente novamente.");
+    }
   };
 
   return (
@@ -105,7 +136,7 @@ export function HomeScreen({ navigation }: Props) {
           </View>
 
           <TouchableOpacity style={styles.sendButton} onPress={handleSendReport}>
-            <Text style={styles.sendButtonText}>Enviar Relatório</Text>
+            <Text style={styles.sendButtonText}>Enviar Denúncia</Text>
           </TouchableOpacity>
         </ScrollView>
       </TouchableWithoutFeedback>
@@ -114,21 +145,106 @@ export function HomeScreen({ navigation }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff", padding: 24 },
-  reportTitle: { fontSize: 20, fontWeight: "bold", marginBottom: 18, textAlign: "center", color: "#222" },
-  section: { marginBottom: 18 },
-  label: { fontSize: 16, fontWeight: "bold", marginBottom: 8, color: "#444" },
-  photoBox: { backgroundColor: "#F2F2F2", borderRadius: 8, alignItems: "center", justifyContent: "center", padding: 18, marginBottom: 8, borderWidth: 1, borderColor: "#E0E0E0", minHeight: 120 },
-  photoText: { color: "#888", fontSize: 14 },
-  photoPreview: { width: 100, height: 100, borderRadius: 8, resizeMode: "cover" },
-  photoButton: { backgroundColor: "#1A73E8", borderRadius: 8, paddingVertical: 10, alignItems: "center" },
-  photoButtonText: { color: "#fff", fontWeight: "bold", fontSize: 16 },
-  geoButton: { backgroundColor: "#F2F2F2", borderRadius: 8, padding: 12, borderWidth: 1, borderColor: "#1A73E8", alignItems: "center", justifyContent: "center", marginTop: 4 },
-  geoButtonText: { color: "#1A73E8", fontSize: 15, fontWeight: "bold" },
-  input: { backgroundColor: "#F2F2F2", borderRadius: 8, padding: 12, fontSize: 15, minHeight: 60, borderWidth: 1, borderColor: "#E0E0E0", textAlignVertical: "top" },
-  sendButton: { backgroundColor: "#1A73E8", borderRadius: 8, paddingVertical: 14, alignItems: "center", marginTop: 10 },
-  sendButtonText: { color: "#fff", fontWeight: "bold", fontSize: 17 },
-  mapButton: { backgroundColor: '#34A853', borderRadius: 8, paddingVertical: 10, alignItems: 'center', marginTop: 10 },
-  mapButtonText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
-  // Removi os estilos do 'header' para simplificar, adicione-os de volta se precisar
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    padding: 24,
+  },
+  reportTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 18,
+    textAlign: "center",
+    color: "#222",
+  },
+  section: {
+    marginBottom: 18,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 8,
+    color: "#444",
+  },
+  photoBox: {
+    backgroundColor: "#F2F2F2",
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 18,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
+    minHeight: 120,
+  },
+  photoText: {
+    color: "#888",
+    fontSize: 14,
+  },
+  photoPreview: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
+    resizeMode: "cover",
+  },
+  photoButton: {
+    backgroundColor: "#1A73E8",
+    borderRadius: 8,
+    paddingVertical: 10,
+    alignItems: "center",
+  },
+  photoButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  geoButton: {
+    backgroundColor: "#F2F2F2",
+    borderRadius: 8,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#1A73E8",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 4,
+  },
+  geoButtonText: {
+    color: "#1A73E8",
+    fontSize: 15,
+    fontWeight: "bold",
+  },
+  input: {
+    backgroundColor: "#F2F2F2",
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 15,
+    minHeight: 60,
+    borderWidth: 1,
+    borderColor: "#E0E0E0",
+    textAlignVertical: "top",
+  },
+  sendButton: {
+    backgroundColor: "#1A73E8",
+    borderRadius: 8,
+    paddingVertical: 14,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  sendButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 17,
+  },
+  mapButton: {
+    backgroundColor: '#34A853',
+    borderRadius: 8,
+    paddingVertical: 10,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  mapButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
 });
