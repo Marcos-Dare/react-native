@@ -102,7 +102,7 @@ export function RegisterScreen({ navigation }:Props){
                                 returnKeyType="done"
                             />
                         </View>
-                        <TouchableOpacity onPress={fazerCadastro}>
+                        <TouchableOpacity onPress={fazerCadastro} testID="register-button">
                             <View style={{alignItems:"center", marginTop:15}}>
                                 <View style={styles.button}>
                                     <Text style={{fontSize:15, color:"#FFFFFF", fontWeight:"bold"}}>Criar Conta</Text>
