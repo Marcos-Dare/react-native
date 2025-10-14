@@ -1,19 +1,17 @@
 import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, Alert, Keyboard, TouchableWithoutFeedback } from "react-native";
 import React, { useState } from "react";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { LoginStackParamList} from "../navigation/types"
-import { useAuth } from "../context/auth"; 
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'; // 1. Importe o KeyboardAwareScrollView
+import { useAuth } from '../context/auth';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-type RegisterScreenNavigationProp = NativeStackNavigationProp<LoginStackParamList,"Register">;
+// MUDANÇA 1: Importando o tipo correto da biblioteca 'native-stack'
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { LoginStackParamList} from "../navigation/types";
 
-type Props = {
-    navigation: RegisterScreenNavigationProp
-};
+// MUDANÇA 2: Usando o tipo correto para definir as propriedades da tela
+type Props = NativeStackScreenProps<LoginStackParamList, "Register">;
 
-export function RegisterScreen({ navigation }:Props){
-    const { handleRegister } = useAuth(); 
-
+export function RegisterScreen({ navigation }: Props) {
+    const { handleRegister } = useAuth();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -34,7 +32,7 @@ export function RegisterScreen({ navigation }:Props){
             Alert.alert(
                 'Sucesso!',
                 'Sua conta foi criada. Agora você pode fazer o login.',
-                [{ text: 'OK', onPress: () => navigation.goBack() }] 
+                [{ text: 'OK', onPress: () => navigation.goBack() }]
             );
         } catch (error: any) {
             Alert.alert('Erro no Cadastro', error.message);
@@ -42,15 +40,14 @@ export function RegisterScreen({ navigation }:Props){
     }
 
     return(
-
+        // MUDANÇA 3: Adicionado o KeyboardAwareScrollView e o TouchableWithoutFeedback
         <KeyboardAwareScrollView
             style={{ flex: 1, backgroundColor: "#d9d9d9" }}
-            contentContainerStyle={{ flexGrow: 1, alignItems: "center" }} 
+            contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
             enableOnAndroid={true}
             extraScrollHeight={20}
             keyboardShouldPersistTaps="handled"
         >
-            {}
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <View style={{alignItems:"center", width: '100%'}}>
                     <View style={styles.container1}>
@@ -61,48 +58,20 @@ export function RegisterScreen({ navigation }:Props){
                         <Text>Crie uma conta para reportar e ajudar a limpar nossa cidade</Text>
                     </View>
                     <View style={styles.central}>
-                        <Text style={{fontSize:25, fontWeight:"bold"}}>Criar Conta</Text>
+                        <Text style={{fontSize:25, fontWeight:"bold"}}>Fazer Conta</Text>
                         <Text style={{fontWeight:"bold", marginTop:5}}>Nome Completo:</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Seu Nome Completo"
-                            value={name}
-                            onChangeText={setName}
-                            returnKeyType="next"
-                        />
+                        <TextInput style={styles.input} placeholder="Seu Nome"  testID="input-nome-completo" value={name} onChangeText={setName} />
                         <Text style={{fontWeight:"bold", marginTop:5}}>Email:</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="seu@email.com"
-                            keyboardType="email-address"
-                            value={email}
-                            onChangeText={setEmail}
-                            autoCapitalize="none"
-                            returnKeyType="next"
-                        />
+                        <TextInput style={styles.input} placeholder="seu@email.com" keyboardType="email-address" value={email} onChangeText={setEmail} autoCapitalize="none"/>
                         <Text style={{fontWeight:"bold", marginTop:5}}>Senha:</Text>
                         <View style={styles.inputContainer}>
-                            <TextInput
-                                style={styles.inputWithIcon}
-                                placeholder="Mínimo 6 caracteres"
-                                secureTextEntry={true}
-                                value={password}
-                                onChangeText={setPassword}
-                                returnKeyType="next"
-                            />
+                            <TextInput style={styles.inputWithIcon} placeholder="Mínimo 6 caracteres" secureTextEntry={true} value={password} onChangeText={setPassword}/>
                         </View>
                         <Text style={{fontWeight:"bold", marginTop:5}}>Confirme a senha:</Text>
                         <View style={styles.inputContainer}>
-                            <TextInput
-                                style={styles.inputWithIcon}
-                                placeholder="Repita a senha"
-                                secureTextEntry={true}
-                                value={confirmPassword}
-                                onChangeText={setConfirmPassword}
-                                returnKeyType="done"
-                            />
+                            <TextInput style={styles.inputWithIcon} placeholder="Repita a senha" secureTextEntry={true} value={confirmPassword} onChangeText={setConfirmPassword}/>
                         </View>
-                        <TouchableOpacity onPress={fazerCadastro} testID="register-button">
+                        <TouchableOpacity onPress={fazerCadastro} testID="botao-criar-conta">
                             <View style={{alignItems:"center", marginTop:15}}>
                                 <View style={styles.button}>
                                     <Text style={{fontSize:15, color:"#FFFFFF", fontWeight:"bold"}}>Criar Conta</Text>

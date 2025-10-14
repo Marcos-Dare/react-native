@@ -1,77 +1,73 @@
-import React from 'react';
-import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
-import { Alert } from 'react-native';
-import App from '../../App';
+import { makeDenunciaUseCases } from '../core/factories/makeDenunciaUseCases';
 import { MockDenunciaRepository } from '../core/infra/repositories/MockDenunciaRepository';
-import { MockUserRepository } from '../core/infra/repositories/MockUserRepository';
+import { Photo } from '../core/domain/value-objects/Photo';
+import { GeoCoordinates } from '../core/domain/value-objects/GeoCoordinates';
+import { Denuncia } from '../core/domain/entities/Denuncia';
 
-// (Mocks das APIs do Expo aqui...)
+describe('Teste de Integração de Lógica: Fluxo de CRUD de Denúncia', () => {
 
-describe('Teste de Integração: Fluxo Completo do Usuário', () => {
+  const { 
+    registerDenuncia, 
+    findDenuncia, 
+    updateDenuncia, 
+    deleteDenuncia 
+  } = makeDenunciaUseCases();
+
+
+  const repository = MockDenunciaRepository.getInstance();
+
 
   beforeEach(() => {
-    MockDenunciaRepository.getInstance().denuncias = [];
-    MockUserRepository.getInstance().users = [];
-    jest.clearAllMocks();
+    repository.denuncias = [];
   });
 
-  it('deve permitir um ciclo completo de CRUD de denúncia via interface', async () => {
-    const { getByText, getByPlaceholderText, findByText, getByTestId, queryByText } = render(<App />);
-
-    // --- 1. CADASTRO E LOGIN (como antes) ---
-    await findByText('Não tem conta? ');
-    fireEvent.press(getByText('Registre-se'));
-    // ... (preenche form de registro e clica em 'botao-criar-conta') ...
-    await waitFor(() => { /* espera alerta de sucesso e clica OK */ });
-    // ... (preenche form de login e clica em 'Enviar') ...
-
-    // --- 2. CRIAR DENÚNCIA ---
-    await findByText('Reportar Entulho'); // Garante que estamos na HomeScreen
-    fireEvent.changeText(getByPlaceholderText('Descreva o entulho, tipo de lixo...'), 'Lixo na calçada');
-    fireEvent.press(getByText('Enviar Denúncia'));
-    await waitFor(() => expect(Alert.alert).toHaveBeenCalledWith('Relatório enviado!', expect.any(String)));
+  it('deve realizar um ciclo completo de Criar, Ler, Atualizar e Deletar uma denúncia', async () => {
     
-    // --- 3. NAVEGAR E LER A DENÚNCIA ---
-    // (A navegação de Drawer é complexa, mas vamos simular o resultado)
-    // Em um teste real com Drawer, precisaríamos de uma função helper para navegar.
-    // Vamos para a MyPage e verificar se o item está lá.
-    const denunciaCriada = MockDenunciaRepository.getInstance().denuncias[0];
+    console.log('ETAPA 1: CREATE');
+    const denunciaData = {
+      userId: 'user-123',
+      foto: Photo.create('file:///test/foto.jpg'),
+      localizacao: GeoCoordinates.create(-21.55, -45.43),
+      descricao: 'Lixo na calçada.',
+    };
     
-    // Supondo que estamos na MyPage, vamos procurar o texto
-    // (Em um teste real, faríamos fireEvent.press(getByTestId('drawer-item-meus-relatorios')))
-    // await findByText('Lixo na calçada'); // <- Isso validaria a leitura na tela MyPage
+    const denunciaCriada = await registerDenuncia.execute(denunciaData);
+    
+    expect(denunciaCriada).toBeInstanceOf(Denuncia);
+    expect(denunciaCriada.status).toBe('pendente');
+    expect(repository.denuncias).toHaveLength(1);
+    expect(repository.denuncias[0].descricao).toBe('Lixo na calçada.');
+    console.log('✅ Denúncia criada com sucesso!');
 
-    // --- 4. ATUALIZAR A DENÚNCIA ---
-    // Clica no botão de editar da denúncia específica
-    // fireEvent.press(getByTestId(`edit-button-${denunciaCriada.id}`));
+    console.log('\nETAPA 2: READ');
+    const idParaBuscar = denunciaCriada.id;
+    const denunciaEncontrada = await findDenuncia.execute({ id: idParaBuscar });
 
-    // Espera o modal de edição aparecer e preenche o novo texto
-    // await findByText('Editar Descrição');
-    // fireEvent.changeText(getByTestId('edit-description-input'), 'Descrição atualizada via teste');
-    // fireEvent.press(getByTestId('save-edit-button'));
+    expect(denunciaEncontrada).not.toBeNull();
+    expect(denunciaEncontrada?.id).toBe(idParaBuscar);
+    console.log('✅ Denúncia encontrada com sucesso!');
 
-    // Espera a UI atualizar e verifica se o texto mudou
-    // await findByText('Descrição atualizada via teste');
-    // expect(queryByText('Lixo na calçada')).toBeNull();
-    console.log('✅ Simulação de Update passou!');
+    console.log('\nETAPA 3: UPDATE');
+    const dadosDeUpdate = {
+      id: idParaBuscar,
+      descricao: 'Descrição foi atualizada.',
+      status: 'em_analise' as const,
+    };
 
-    // --- 5. DELETAR A DENÚNCIA ---
-    // Espiona o Alert para confirmar a exclusão
-    const alertSpy = jest.spyOn(Alert, 'alert').mockImplementation((title, message, buttons) => {
-        if (buttons && buttons[1] && buttons[1].onPress) {
-            buttons[1].onPress(); // Simula o clique no botão "Excluir"
-        }
-    });
+    const denunciaAtualizada = await updateDenuncia.execute(dadosDeUpdate);
 
-    // Clica no botão de deletar da denúncia específica
-    // fireEvent.press(getByTestId(`delete-button-${denunciaCriada.id}`));
+    const denunciaDoRepo = await repository.findById(idParaBuscar);
+    expect(denunciaAtualizada.descricao).toBe('Descrição foi atualizada.');
+    expect(denunciaAtualizada.status).toBe('em_analise');
+    expect(denunciaDoRepo?.descricao).toBe('Descrição foi atualizada.');
+    console.log('✅ Denúncia atualizada com sucesso!');
 
-    // Espera o item sumir da tela
-    // await waitFor(() => {
-    //   expect(queryByText('Descrição atualizada via teste')).toBeNull();
-    // });
-    console.log('✅ Simulação de Delete passou!');
+    console.log('\nETAPA 4: DELETE');
+    await deleteDenuncia.execute({ id: idParaBuscar });
 
-    alertSpy.mockRestore();
+    const denunciaDeletada = await repository.findById(idParaBuscar);
+    expect(denunciaDeletada).toBeNull();
+    expect(repository.denuncias).toHaveLength(0);
+    console.log('✅ Denúncia deletada com sucesso!');
   });
 });

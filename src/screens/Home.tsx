@@ -102,7 +102,8 @@ export function HomeScreen({ navigation }: Props) {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View>
-          <Text style={styles.reportTitle}>Reportar Entulho</Text>
+          <Text testID="titulo-reportar-entulho" style={styles.reportTitle}>Reportar Entulho</Text>
+
           
           <View style={styles.section}>
             <Text style={styles.label}>Foto do Entulho</Text>

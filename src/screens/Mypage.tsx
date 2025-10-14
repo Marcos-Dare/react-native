@@ -95,10 +95,10 @@ export function MyPage() {
               Lat: {report.localizacao.latitude.toFixed(4)}, Lon: {report.localizacao.longitude.toFixed(4)}
             </Text>
             <View style={styles.actionsContainer}>
-              <TouchableOpacity style={styles.actionButton} onPress={() => openEditModal(report)}>
+              <TouchableOpacity style={styles.actionButton} onPress={() => openEditModal(report)} testID={`botao-editar-${report.id}`}>
                 <Text style={styles.actionText}>Editar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.actionButton} onPress={() => handleDelete(report.id)}>
+              <TouchableOpacity style={styles.actionButton} onPress={() => handleDelete(report.id)} testID={`botao-excluir-${report.id}`}>
                 <Text style={[styles.actionText, {color: 'red'}]}>Excluir</Text>
               </TouchableOpacity>
             </View>
@@ -121,10 +121,11 @@ export function MyPage() {
               onChangeText={setNewDescription}
               value={newDescription}
               multiline
+              testID="input-editar-descricao"
             />
             <View style={styles.modalActions}>
               <Button title="Cancelar" onPress={() => setModalVisible(false)} color="gray" />
-              <Button title="Salvar" onPress={handleUpdate} />
+              <Button title="Salvar" onPress={handleUpdate} testID="botao-salvar-edicao"/>
             </View>
           </View>
         </View>
