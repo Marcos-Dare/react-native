@@ -17,10 +17,10 @@ export class RegisterDenuncia {
 
     const denuncia = Denuncia.create({
       id: uuidv4(),
-      userId,
-      foto,
-      localizacao,
-      descricao,
+      userId: userId,
+      foto: foto,
+      localizacao: localizacao,
+      descricao: descricao
     });
 
     await this.denunciaRepository.save(denuncia);

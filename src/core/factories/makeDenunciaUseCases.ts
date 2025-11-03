@@ -7,9 +7,12 @@ import { FindDenuncia } from '../domain/use-cases/FindDenuncia';
 import { FindDenunciasByUserId } from '../domain/use-cases/FindDenunciaByUserId';
 import { FindAllDenuncias } from '../domain/use-cases/FindAllDenuncias';
 import { MockGeocodingService } from '../infra/services/MockGeocodingService';
+import { SupabaseDenunciaRepository } from '../infra/repositories/SupabaseDenunciaRepository';
 
 export function makeDenunciaUseCases() {
-  const denunciaRepository = MockDenunciaRepository.getInstance();
+  const denunciaRepository: IDenunciaRepository = process.env.EXPO_PUBLIC_USE_API
+    ? SupabaseDenunciaRepository.getInstance()
+    : MockDenunciaRepository.getInstance();
   const geocodingService = new MockGeocodingService();
 
   const registerDenuncia = new RegisterDenuncia(denunciaRepository);

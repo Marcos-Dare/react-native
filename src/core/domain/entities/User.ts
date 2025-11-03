@@ -2,7 +2,6 @@
 import { Email } from '../value-objects/Email';
 import { Name } from '../value-objects/Name';
 import { Password } from '../value-objects/Password';
-import { GeoCoordinates } from '../value-objects/GeoCoordinates';
 
 export type UserRole = "cidadão" | "agente";
 
@@ -10,7 +9,7 @@ export class User {
   readonly id: string;
   readonly name: Name;
   readonly email: Email;
-  readonly password: Password;
+  readonly password: Password | null;
   readonly role: UserRole;
 
 
@@ -18,7 +17,7 @@ export class User {
     id: string;
     name: Name;
     email: Email;
-    password: Password;
+    password: Password | null;
     role: UserRole;
 
   }) {
@@ -39,6 +38,18 @@ export class User {
   }): User {
     return new User({
       ...props,
+    });
+  }
+
+  static fromDatabase(props: {
+    id: string;
+    name: Name;
+    email: Email;
+    role: UserRole;
+  }): User {
+    return new User({
+      ...props,
+      password: null,
     });
   }
 

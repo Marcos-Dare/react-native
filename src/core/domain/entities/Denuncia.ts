@@ -32,7 +32,7 @@ export class Denuncia {
 
   static create(
     props: {
-      id: string;
+      id: string; // Gerado pelo uuidv4 no caso de uso
       userId: string;
       foto: Photo;
       localizacao: GeoCoordinates;
@@ -42,9 +42,23 @@ export class Denuncia {
     return new Denuncia({
       ...props,
       descricao: props.descricao ?? null,
-      status: "pendente",
-      dataHora: new Date(),
+      status: "pendente", // Define o status padrão
+      dataHora: new Date(), // Define a data de criação
     });
+  }
+
+  // MÉTODO 2: Para recriar denúncias EXISTENTES (do Supabase)
+  static fromDatabase(props: {
+    id: string;
+    userId: string;
+    foto: Photo;
+    descricao: string | null;
+    localizacao: GeoCoordinates;
+    status: StatusDenuncia;
+    dataHora: Date;
+  }): Denuncia {
+    // Apenas chama o construtor com os dados exatos do banco
+    return new Denuncia(props);
   }
 
   // Métodos de mudança de status
