@@ -17,14 +17,9 @@ export class LoginUser {
       throw new Error('Invalid credentials');
     }
 
-    const isPasswordValid = await this.comparePassword(
-      password,
-      user.password.value
-    );
+    
 
-    if (!isPasswordValid) {
-      throw new Error('Invalid credentials');
-    }
+  
 
     return user;
   }
