@@ -1,6 +1,5 @@
 import { User } from '../entities/User';
 import { IUserRepository } from '../repositories/IUserRepository';
-import { Email } from '../value-objects/Email';
 
 export class LoginUser {
   constructor(private readonly userRepository: IUserRepository) {}
@@ -16,10 +15,6 @@ export class LoginUser {
     if (!user) {
       throw new Error('Invalid credentials');
     }
-
-    
-
-  
 
     return user;
   }

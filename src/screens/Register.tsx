@@ -42,7 +42,7 @@ export function RegisterScreen({ navigation }: Props) {
     return(
         // MUDANÇA 3: Adicionado o KeyboardAwareScrollView e o TouchableWithoutFeedback
         <KeyboardAwareScrollView
-            style={{ flex: 1, backgroundColor: "#d9d9d9" }}
+            style={{ flex: 1, backgroundColor: "#EAEAEA" }}
             contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
             enableOnAndroid={true}
             extraScrollHeight={20}
@@ -54,11 +54,9 @@ export function RegisterScreen({ navigation }: Props) {
                         <Image style={styles.reciclar} source={require("../assets/reciclar.png")}></Image>
                         <Text style={styles.geolixo}>GeoLixo</Text>
                     </View>
-                    <View style={{alignItems:"center"}}>
-                        <Text>Crie uma conta para reportar e ajudar a limpar nossa cidade</Text>
-                    </View>
+                    
                     <View style={styles.central}>
-                        <Text style={{fontSize:25, fontWeight:"bold"}}>Fazer Conta</Text>
+                        <Text style={{fontSize:25, fontWeight:"bold"}}>Criar Conta</Text>
                         <Text style={{fontWeight:"bold", marginTop:5}}>Nome Completo:</Text>
                         <TextInput style={styles.input} placeholder="Seu Nome"  testID="input-nome-completo" value={name} onChangeText={setName} />
                         <Text style={{fontWeight:"bold", marginTop:5}}>Email:</Text>
@@ -109,7 +107,7 @@ const styles = StyleSheet.create({
         fontWeight:"bold"
     },
     central:{
-        width:300,
+        width:310,
         backgroundColor:"#FFFFFF",
         borderRadius:12,
         marginTop:25,
@@ -120,19 +118,19 @@ const styles = StyleSheet.create({
         justifyContent:"center"
     },
     inputWithIcon:{
-        borderWidth: 1,
+        borderWidth: 0.8,
         borderRadius: 10,
         backgroundColor: "#f9f9f9",
         marginTop: 5,
-        padding: 8,
+        padding: 10,
         paddingRight:35
     },
     input:{
-        borderWidth:1,
+        borderWidth:0.8,
         borderRadius:10,
         backgroundColor:"#f9f9f9",
         marginTop:5,
-        padding: 8
+        padding: 10
     },
     icon:{
         position:"absolute",

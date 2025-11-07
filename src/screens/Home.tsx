@@ -18,7 +18,6 @@ export function HomeScreen({ navigation }: Props) {
 
   const { registerDenuncia } = makeDenunciaUseCases();
   const { user } = useAuth();
-
   const [photoUri, setPhotoUri] = useState<string | null>(null);
   const [location, setLocation] = useState<{ latitude: number; longitude: number } | null>(null);
   const [description, setDescription] = useState<string>("");
@@ -31,9 +30,12 @@ export function HomeScreen({ navigation }: Props) {
       return;
     }
     const result = await ImagePicker.launchCameraAsync({
-        allowsEditing: false,
+        mediaTypes: ["images"],
+        allowsEditing: true,
+        aspect: [4, 3],
         quality: 0.5,
     });
+
     if (!result.canceled && result.assets && result.assets.length > 0) {
       setPhotoUri(result.assets[0].uri);
     }

@@ -34,7 +34,7 @@ export function Login({ navigation }: Props) {
     
     return (
         <KeyboardAwareScrollView
-            style={{ flex: 1, backgroundColor: "#d9d9d9" }}
+            style={{ flex: 1, backgroundColor: "#EAEAEA" }}
             contentContainerStyle={{ alignItems: "center", paddingVertical: 20 }}
             enableOnAndroid={true}
             keyboardShouldPersistTaps="handled">
@@ -43,9 +43,7 @@ export function Login({ navigation }: Props) {
                     <Image style={styles.reciclar} source={require("../assets/reciclar.png")}></Image>
                     <Text style={styles.geolixo}>GeoLixo</Text>
                 </View>
-                <View style={{ alignItems: "center" }}>
-                    <Text>Entre para reportar e ajudar a limpar nossa cidade</Text>
-                </View>
+                
                 <View style={styles.central}>
                     <Text style={{ fontSize: 25, fontWeight: "bold" }}>Login</Text>
                     <Text style={{ fontWeight: "bold", marginTop: 5 }}>Email:</Text>
