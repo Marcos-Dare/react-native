@@ -8,11 +8,17 @@ import { FindDenunciasByUserId } from '../domain/use-cases/FindDenunciaByUserId'
 import { FindAllDenuncias } from '../domain/use-cases/FindAllDenuncias';
 import { MockGeocodingService } from '../infra/services/MockGeocodingService';
 import { SupabaseDenunciaRepository } from '../infra/repositories/SupabaseDenunciaRepository';
+import { UploadFileUseCase } from '../domain/use-cases/UpaloadFile';
+import { DeleteFileUseCase } from '../domain/use-cases/DeleteFile';
+import {SupabaseStorageService} from "../infra/supabase/storage/storageService"
+
 
 export function makeDenunciaUseCases() {
   const denunciaRepository: IDenunciaRepository = process.env.EXPO_PUBLIC_USE_API
     ? SupabaseDenunciaRepository.getInstance()
     : MockDenunciaRepository.getInstance();
+
+    
   const geocodingService = new MockGeocodingService();
 
   const registerDenuncia = new RegisterDenuncia(denunciaRepository);
@@ -22,6 +28,11 @@ export function makeDenunciaUseCases() {
   const findDenunciasByUserId = new FindDenunciasByUserId(denunciaRepository);
   const findAllDenuncias = new FindAllDenuncias(denunciaRepository, geocodingService);
 
+  const supabaseStorageRepository = new SupabaseStorageService
+  const uploadFile = new UploadFileUseCase(supabaseStorageRepository)
+  const deleteFile = new DeleteFileUseCase(supabaseStorageRepository)
+  
+
   return {
     registerDenuncia,
     deleteDenuncia,
@@ -29,5 +40,7 @@ export function makeDenunciaUseCases() {
     findDenuncia,
     findDenunciasByUserId,
     findAllDenuncias,
+    uploadFile,
+    deleteFile
   };
 }

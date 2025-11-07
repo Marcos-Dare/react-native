@@ -80,6 +80,13 @@ export function HomeScreen({ navigation }: Props) {
         localizacao: GeoCoordinates.create(location.latitude, location.longitude),
         descricao: description,
       };
+      const denunciaUseCases = makeDenunciaUseCases();
+      
+      await denunciaUseCases.uploadFile.execute({
+            imageUri: photoUri,
+            bucket: 'denuncias',
+            userId: user.id,
+      });
 
       await registerDenuncia.execute(denunciaData);
 
