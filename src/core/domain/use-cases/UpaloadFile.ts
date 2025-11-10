@@ -1,21 +1,27 @@
-
-import { IStorageService } from '../../infra/supabase/storage/storageService'
+import { IStorageService } from '../../infra/supabase/storage/storageService'; // Ajuste o caminho
 
 export class UploadFileUseCase {
-  constructor(private storageService: IStorageService) {}
+  constructor(private readonly storageService: IStorageService) {}
 
-  async execute(data: {
-    imageUri: any
-    bucket: string 
+  /**
+   * Recebe a URI local da imagem e os dados do upload.
+   */
+  async execute(params: {
+    imageUri: any,
+    bucket: string,
     userId: string
   }): Promise<string> {
-    const { imageUri, bucket, userId } = data
     
-    if (!imageUri || !bucket || !userId) {
-      throw new Error('Parâmetros obrigatórios: imageUri, bucket, userId')
+    // 1. Validação para evitar o erro 'split'
+    if (!params.imageUri) {
+      throw new Error("URI da imagem não pode ser nula.");
     }
-
-    return await this.storageService.uploadImage(imageUri, bucket, userId)
     
+    // 2. Apenas repassa a chamada para o serviço de storage
+    return this.storageService.uploadImage(
+      params.imageUri, 
+      params.bucket, 
+      params.userId
+    );
   }
 }

@@ -74,19 +74,20 @@ export function HomeScreen({ navigation }: Props) {
     }
 
     try {
-      const denunciaData = {
-        userId: user.id,
-        foto: Photo.create(photoUri),
-        localizacao: GeoCoordinates.create(location.latitude, location.longitude),
-        descricao: description,
-      };
       const denunciaUseCases = makeDenunciaUseCases();
-      
-      await denunciaUseCases.uploadFile.execute({
+      const publicUrl = await denunciaUseCases.uploadFile.execute({
             imageUri: photoUri,
             bucket: 'denuncias',
             userId: user.id,
       });
+
+
+      const denunciaData = {
+        userId: user.id,
+        foto: Photo.create(publicUrl),
+        localizacao: GeoCoordinates.create(location.latitude, location.longitude),
+        descricao: description,
+      };
 
       await registerDenuncia.execute(denunciaData);
 
