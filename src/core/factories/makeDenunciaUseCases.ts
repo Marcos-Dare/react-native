@@ -11,7 +11,8 @@ import { SupabaseDenunciaRepository } from '../infra/repositories/SupabaseDenunc
 import { UploadFileUseCase } from '../domain/use-cases/UpaloadFile';
 import { DeleteFileUseCase } from '../domain/use-cases/DeleteFile';
 import {SupabaseStorageService} from "../infra/supabase/storage/storageService"
-
+import { ExpoLocationGeocodingService } from '../services/ExpoLocationGeocodingService';
+import { IGeocodingService } from '../services/IGeocodingService';
 
 export function makeDenunciaUseCases() {
   const denunciaRepository: IDenunciaRepository = process.env.EXPO_PUBLIC_USE_API
@@ -19,7 +20,9 @@ export function makeDenunciaUseCases() {
     : MockDenunciaRepository.getInstance();
 
     
-  const geocodingService = new MockGeocodingService();
+  const geocodingService: IGeocodingService = process.env.EXPO_PUBLIC_USE_API
+    ? new ExpoLocationGeocodingService()
+    : new MockGeocodingService();
 
   const registerDenuncia = new RegisterDenuncia(denunciaRepository);
   const deleteDenuncia = new DeleteDenuncia(denunciaRepository);

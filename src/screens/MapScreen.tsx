@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker} from 'react-native-maps'; // Adicionei o PROVIDER_OSM
 import { RouteProp } from '@react-navigation/native';
-import { LoginStackParamList } from '../navigation/types'; // Vamos criar este arquivo no próximo passo
+// MUDANÇA 1: Importe o tipo correto
+import { HomeStackNavigatorParamList } from '../navigation/types'; 
 
-type MapScreenRouteProp = RouteProp<LoginStackParamList, 'MapScreen'>;
+// MUDANÇA 2: Use o tipo correto aqui
+type MapScreenRouteProp = RouteProp<HomeStackNavigatorParamList, 'MapScreen'>;
 
 type Props = {
   route: MapScreenRouteProp;
@@ -24,7 +26,10 @@ export function MapScreen({ route }: Props) {
 
   return (
     <View style={styles.container}>
-      <MapView style={styles.map} initialRegion={initialRegion}>
+      <MapView 
+        style={styles.map} 
+        initialRegion={initialRegion}
+      >
         <Marker
           coordinate={{ latitude, longitude }}
           title="Localização do Entulho"
