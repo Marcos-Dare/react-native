@@ -23,19 +23,15 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.empresa.meuapp",
-      "edgeToEdgeEnabled": true,
-      "config": {
-        "googleMaps": {
-          "apiKey": "process.env.GOOGLE_MAPS_API_KEY"
-        }
-      }
+      "edgeToEdgeEnabled": true
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "updates": {
       "url": "https://u.expo.dev/076b3ff4-0289-411f-b6b5-a38ecd6e4247",
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "enabled": false
     },
     "runtimeVersion": {
       "policy": "appVersion"
@@ -44,6 +40,9 @@
       "eas": {
         "projectId": "076b3ff4-0289-411f-b6b5-a38ecd6e4247"
       }
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
